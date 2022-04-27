@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:quiz_bet/data/app_settings/color_pallete/colors.dart';
 import 'package:quiz_bet/main.dart';
 import 'package:quiz_bet/ui/screens/home/models/results/hive_results.dart';
+import 'package:quiz_bet/ui/screens/onboarding/ui/onboarding_screen.dart';
 import 'package:quiz_bet/ui/screens/quiz/models/limit_model/limit_model.dart';
 import 'package:quiz_bet/ui/screens/quiz/quiz_screen.dart';
 import 'package:quiz_bet/ui/uikit/b_winners_label.dart';
@@ -149,13 +150,23 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Quiz> quiz = [];
     for (int i = 0; i < listMapAll[index - 1][index.toString()].length; i++)
       quiz.add(Quiz.fromJson(listMapAll[index - 1][index.toString()][i]));
-    if(premium==true || ((datad.attempts!) > 0))Navigator.push(
+    if(premium==true || ((datad.attempts!) > 0))
+      {Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext ctx) =>
             QuizScreen(quiz: quiz, indexOfQuiz: index),
       ),
-    );
+    );}
+    else{
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext ctx) =>
+              OnBoardingScreen(),
+        ),
+      );
+    }
     if(datad.attempts!>0)datad.attempts = (box.values.first.attempts!)-1;
     await box.clear();
     await box.put('limits', datad);

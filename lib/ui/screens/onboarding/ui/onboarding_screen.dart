@@ -21,7 +21,7 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(child: Scaffold(
       backgroundColor: AppColors.darkblue,
       body: Container(
         decoration: BoxDecoration(
@@ -68,17 +68,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     child: Text(
                       'B',
                       style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: 'MontBold',
-                        fontSize: 50.w,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black.withOpacity(0.5),
-                            offset: Offset(1,1),
-                            blurRadius: 2,
-                          )
-                        ]
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: 'MontBold',
+                          fontSize: 50.w,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black.withOpacity(0.5),
+                              offset: Offset(1,1),
+                              blurRadius: 2,
+                            )
+                          ]
                       ),
                     ),
                   ),
@@ -89,9 +89,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 padding: EdgeInsets.zero,
                 child: Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: Svg('assets/images/rectangle.svg',color: AppColors.yellow,size: Size(360.w,85.h))
-                    )
+                      image: DecorationImage(
+                          image: Svg('assets/images/rectangle.svg',color: AppColors.yellow,size: Size(360.w,85.h))
+                      )
                   ),
                   child: Center(
                     child: Text(
@@ -114,9 +114,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       width: 51.h,
                       height: 51.h,
                       decoration: BoxDecoration(
-                        color: AppColors.usualBlue.withOpacity(0.3),
-                        border: Border.all(color: AppColors.usualBlue,width: 2.2.w),
-                        borderRadius: BorderRadius.circular(12.r)
+                          color: AppColors.usualBlue.withOpacity(0.3),
+                          border: Border.all(color: AppColors.usualBlue,width: 2.2.w),
+                          borderRadius: BorderRadius.circular(12.r)
                       ),
                       child: Center(
                         child: Icon(CupertinoIcons.restart,color: AppColors.white,size: 35.h,),
@@ -278,6 +278,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
         ),
       ),
-    );
+    ), onWillPop: ()async=>false);
   }
 }
