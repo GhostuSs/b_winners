@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quiz_bet/data/app_settings/color_pallete/colors.dart';
 import 'package:quiz_bet/gen/assets.gen.dart';
+import 'package:quiz_bet/main.dart';
 import 'package:quiz_bet/ui/screens/home/models/quiz_model.dart';
 import 'package:quiz_bet/ui/uikit/b_winners_label.dart';
 
@@ -31,13 +32,7 @@ class _QuizScreenState extends State<QuizScreen> {
   int isChosen = 0;
   Answered answered = Answered.notStated;
   List<bool> visible = List.generate(4, (index) => true);
-  Widget label = Text('-1 attempt',
-      style: TextStyle(
-        color: AppColors.red,
-        fontFamily: 'MontBold',
-        fontWeight: FontWeight.w700,
-        fontSize: 16.w,
-      ));
+  late Widget label;
   late Timer _timer;
   int _start = 15;
 
@@ -51,7 +46,7 @@ class _QuizScreenState extends State<QuizScreen> {
             timer.cancel();
           });
         } else {
-          label = _start==15 ? Text('-1 attempt',
+          label = _start==15&&premium==false ? Text('-1 attempt',
               style: TextStyle(
                 color: AppColors.red,
                 fontFamily: 'MontBold',
@@ -74,6 +69,13 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   void initState() {
+    label = premium==false ? Text('-1 attempt',
+        style: TextStyle(
+          color: AppColors.red,
+          fontFamily: 'MontBold',
+          fontWeight: FontWeight.w700,
+          fontSize: 16.w,
+        )) : Text('');
     startTimer();
     super.initState();
   }
