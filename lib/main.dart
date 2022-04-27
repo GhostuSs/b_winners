@@ -38,7 +38,6 @@ Future<void> main() async {
   // await sd.clear();
   // await prem.clear();
   premium = prem.values.first;
-  final box = await Hive.openBox<HiveResult>('results');
   runApp(const App());
 }
 

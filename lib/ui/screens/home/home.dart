@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var data = '';
     rootBundle.loadString('assets/quizes.json').then((value) => data = value);
+    loadHive().then((value) => setState((){}));
     return FutureBuilder(
         future: loadHive(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -144,9 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
       datad.timeToUpdate=DateTime.now();
       datad.attempts=5;
     }
-    if(datad.attempts!>0)datad.attempts = (box.values.first.attempts!)-1;
-    await box.clear();
-    await box.put('limits', datad);
     final listMapAll = jsonDecode(data);
     List<Quiz> quiz = [];
     for (int i = 0; i < listMapAll[index - 1][index.toString()].length; i++)
@@ -158,5 +156,8 @@ class _HomeScreenState extends State<HomeScreen> {
             QuizScreen(quiz: quiz, indexOfQuiz: index),
       ),
     );
+    if(datad.attempts!>0)datad.attempts = (box.values.first.attempts!)-1;
+    await box.clear();
+    await box.put('limits', datad);
   }
 }

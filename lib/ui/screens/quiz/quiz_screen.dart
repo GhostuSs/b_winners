@@ -15,7 +15,6 @@ enum Answered { correct, wrong, notStated }
 
 class QuizScreen extends StatefulWidget {
   QuizScreen({required this.quiz, required this.indexOfQuiz});
-
   final int indexOfQuiz;
   final List<Quiz> quiz;
 
@@ -142,7 +141,9 @@ class _QuizScreenState extends State<QuizScreen> {
                         Padding(
                           padding:EdgeInsets.only(top: 45.h,right: 55.w),
                           child: InkWell(
-                            onTap: ()=>Navigator.pop(context),
+                            onTap: (){
+                              Navigator.pop(context);
+                              },
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 5.w),
                               child: Center(child: Icon(Icons.arrow_back_ios,color: AppColors.white,),),
