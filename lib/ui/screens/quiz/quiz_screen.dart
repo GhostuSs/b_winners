@@ -31,7 +31,13 @@ class _QuizScreenState extends State<QuizScreen> {
   int isChosen = 0;
   Answered answered = Answered.notStated;
   List<bool> visible = List.generate(4, (index) => true);
-  Widget label = Text('');
+  Widget label = Text('-1 attempt',
+      style: TextStyle(
+        color: AppColors.red,
+        fontFamily: 'MontBold',
+        fontWeight: FontWeight.w700,
+        fontSize: 16.w,
+      ));
   late Timer _timer;
   int _start = 15;
 
@@ -45,7 +51,13 @@ class _QuizScreenState extends State<QuizScreen> {
             timer.cancel();
           });
         } else {
-          print(_start);
+          label = _start==15 ? Text('-1 attempt',
+              style: TextStyle(
+                color: AppColors.red,
+                fontFamily: 'MontBold',
+                fontWeight: FontWeight.w700,
+                fontSize: 16.w,
+              )) : Text('');
           setState(() {
             _start--;
           });
@@ -121,8 +133,23 @@ class _QuizScreenState extends State<QuizScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    BWinLabel(),
+                    Row(
+                      children: [
+                        Padding(
+                          padding:EdgeInsets.only(top: 45.h,right: 55.w),
+                          child: InkWell(
+                            onTap: ()=>Navigator.pop(context),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                              child: Center(child: Icon(Icons.arrow_back_ios,color: AppColors.white,),),
+                            ),
+                          ),
+                        ),
+                        BWinLabel()
+                      ],
+                    ),
                     Divider(
                       color: AppColors.white.withOpacity(0.3),
                     ),
@@ -298,31 +325,12 @@ class _QuizScreenState extends State<QuizScreen> {
     }
     if (index < widget.quiz.length - 1)
       Future.delayed(Duration(milliseconds: 500)).then((value) {
-        if (index == 0 && answered==Answered.wrong)
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-            backgroundColor: AppColors.darkblue,
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('-1 attempt',
-                      style: TextStyle(
-                        color: AppColors.red,
-                        fontFamily: 'MontBold',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16.w,
-                      ))
-                ],
-              ))
-          );
         setState(() {
           index++;
           answered = Answered.notStated;
           label=Text('');
           visible = List.generate(4, (index) => true);
         });
-        Future.delayed(Duration(milliseconds: 400)).then((value) => ScaffoldMessenger.of(context).hideCurrentSnackBar());
       });
     else {
       _timer.cancel();
