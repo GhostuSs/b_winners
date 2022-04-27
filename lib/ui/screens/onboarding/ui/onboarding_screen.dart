@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hive/hive.dart';
 import 'package:quiz_bet/data/app_settings/color_pallete/colors.dart';
 import 'package:quiz_bet/data/app_settings/navigation/routes.dart';
@@ -21,13 +22,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.usualBlue,
-      resizeToAvoidBottomInset: false,
+      backgroundColor: AppColors.darkblue,
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/onBoarding.png'),
-                fit: BoxFit.cover)),
+                fit: BoxFit.fill)),
         child: Container(
           decoration: BoxDecoration(),
           child: Column(
@@ -50,6 +50,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       child: Icon(
                         Icons.clear,
                         color: AppColors.white,
+                        size: 30.h,
                       ),
                     ),
                   )
@@ -61,7 +62,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.star_rounded,color: AppColors.yellow,size: 30.h,),
+                  Icon(Icons.star_rounded,color: AppColors.yellow,size: 50.h,),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
                     child: Text(
@@ -71,26 +72,39 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         fontWeight: FontWeight.w900,
                         fontFamily: 'MontBold',
                         fontSize: 50.w,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.5),
+                            offset: Offset(1,1),
+                            blurRadius: 2,
+                          )
+                        ]
                       ),
                     ),
                   ),
-                  Icon(Icons.star_rounded,color: AppColors.yellow,size: 30.h,),
+                  Icon(Icons.star_rounded,color: AppColors.yellow,size: 50.h,),
                 ],
               ),
-              Stack(children: [
-                Assets.images.rectangle.svg(),
-                Positioned(
-                  left: 25.w,
+              Padding(
+                padding: EdgeInsets.zero,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: Svg('assets/images/rectangle.svg',color: AppColors.yellow,size: Size(360.w,85.h))
+                    )
+                  ),
+                  child: Center(
                     child: Text(
-                  'WINNERS',
-                  style: TextStyle(
-                      color: AppColors.usualBlue,
-                      fontWeight: FontWeight.w900,
-                      fontFamily: 'MontBold',
-                      fontSize: 50.w),
-                )
-                )
-              ],),
+                      'WINNERS',
+                      style: TextStyle(
+                          color: AppColors.usualBlue,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: 'MontBold',
+                          fontSize: 50.w),
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(height: 100.h,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 94.w,vertical: 24.h),
@@ -105,7 +119,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         borderRadius: BorderRadius.circular(12.r)
                       ),
                       child: Center(
-                        child: Icon(CupertinoIcons.restart,color: AppColors.white,size: 25.h,),
+                        child: Icon(CupertinoIcons.restart,color: AppColors.white,size: 35.h,),
                       ),
                     ),
                     SizedBox(width: 24.w,),
@@ -116,7 +130,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           color: AppColors.white,
                           fontWeight: FontWeight.w700,
                           fontFamily: 'MontBold',
-                          fontSize: 20.w),
+                          fontSize: 20.w,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black.withOpacity(0.5),
+                              offset: Offset(1,1),
+                              blurRadius: 1,
+                            )
+                          ]
+                      ),
                     )
                   ],
                 ),
@@ -139,7 +161,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           borderRadius: BorderRadius.circular(12.r)
                       ),
                       child: Center(
-                        child: Icon(CupertinoIcons.clear_circled,color: AppColors.white,size: 25.h,),
+                        child: Icon(CupertinoIcons.clear_circled,color: AppColors.white,size: 35.h,),
                       ),
                     ),
                     SizedBox(width: 24.w,),
@@ -150,7 +172,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           color: AppColors.white,
                           fontWeight: FontWeight.w700,
                           fontFamily: 'MontBold',
-                          fontSize: 20.w),
+                          fontSize: 20.w,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black.withOpacity(0.5),
+                              offset: Offset(1,1),
+                              blurRadius: 1,
+                            )
+                          ]),
                     )
                   ],
                 ),
@@ -191,7 +220,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
               ),
               Opacity(
-                opacity: 0.5,
+                opacity: 0.4,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.w),
                   child: Row(
@@ -244,7 +273,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 56.h,)
+              SizedBox(height: 40.h,)
             ],
           ),
         ),

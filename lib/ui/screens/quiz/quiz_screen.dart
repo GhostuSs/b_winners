@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,12 +31,7 @@ class _QuizScreenState extends State<QuizScreen> {
   int isChosen = 0;
   Answered answered = Answered.notStated;
   List<bool> visible = List.generate(4, (index) => true);
-  Widget label=Text('-1 attempt',style: TextStyle(
-    color: AppColors.red,
-    fontFamily: 'MontBold',
-    fontWeight: FontWeight.w700,
-    fontSize: 16.w,
-  ));
+  Widget label = Text('');
   late Timer _timer;
   int _start = 15;
 
@@ -50,13 +46,6 @@ class _QuizScreenState extends State<QuizScreen> {
           });
         } else {
           print(_start);
-          label = timer.tick==1 ? Text('-1 attempt',style: TextStyle(
-            color: AppColors.red,
-            fontFamily: 'MontBold',
-            fontWeight: FontWeight.w700,
-            fontSize: 16.w,
-          )
-            ,) : Text('');
           setState(() {
             _start--;
           });
@@ -79,9 +68,9 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_start != 0) {
-      return WillPopScope(
-        child: Scaffold(
+    return WillPopScope(
+      child: Stack(children: [
+        Scaffold(
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
                 border: Border(
@@ -119,8 +108,12 @@ class _QuizScreenState extends State<QuizScreen> {
               currentIndex: 0,
             ),
           ),
-          floatingActionButton: Padding(child: label,padding: EdgeInsets.only(bottom: 94.h),),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Padding(
+            child: label,
+            padding: EdgeInsets.only(bottom: 94.h),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           body: Container(
             color: AppColors.darkblue,
             child: Center(
@@ -175,54 +168,49 @@ class _QuizScreenState extends State<QuizScreen> {
                             i < widget.quiz[index].answers!.length;
                             i++)
                           Visibility(
-                              visible: visible[i] == true,
-                              child: Padding(
-                                padding: EdgeInsets.all(5.w),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        color: AppColors.usualBlue
-                                            .withOpacity(0.3),
-                                        borderRadius:
-                                            BorderRadius.circular(20.r),
-                                        border: Border.all(
-                                            color: borderColorSelector(
-                                                isChosen)[i],
-                                            width: 2.2.w)),
-                                    child: InkWell(
-                                      customBorder: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.r),
-                                      ),
-                                      onTap: () =>
-                                          answered == Answered.notStated
-                                              ? _onAnswerPressed(i)
-                                              : null,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.h),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.r)),
-                                          width: 145.w,
-                                          height: 105.h,
-                                          child: Center(
-                                            child: Text(
-                                              widget.quiz[index].answers![i]
-                                                  .toUpperCase(),
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: textColorSelector(
-                                                      isChosen)[i],
-                                                  fontSize: 20.w,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontFamily: 'MontBold'),
-                                            ),
-                                          ),
+                            visible: visible[i] == true,
+                            child: Padding(
+                              padding: EdgeInsets.all(5.w),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppColors.usualBlue.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    border: Border.all(
+                                        color: borderColorSelector(isChosen)[i],
+                                        width: 2.2.w)),
+                                child: InkWell(
+                                  customBorder: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  onTap: () => answered == Answered.notStated
+                                      ? _onAnswerPressed(i)
+                                      : null,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.h),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.r)),
+                                      width: 145.w,
+                                      height: 105.h,
+                                      child: Center(
+                                        child: Text(
+                                          widget.quiz[index].answers![i]
+                                              .toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: textColorSelector(
+                                                  isChosen)[i],
+                                              fontSize: 20.w,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: 'MontBold'),
                                         ),
                                       ),
                                     ),
+                                  ),
                                 ),
                               ),
+                            ),
                           )
                       ],
                     ),
@@ -232,14 +220,16 @@ class _QuizScreenState extends State<QuizScreen> {
             ),
           ),
         ),
-        onWillPop: () async => false,
-      );
-    } else {
-      return ResultScreen(
-        indexOfQuiz: widget.indexOfQuiz,
-        result: correctAnswers,
-      );
-    }
+        Visibility(
+          visible: _start == 0,
+          child: ResultScreen(
+            result: correctAnswers,
+            indexOfQuiz: widget.indexOfQuiz,
+          ),
+        )
+      ]),
+      onWillPop: () async => false,
+    );
   }
 
   List<Color> textColorSelector(int chosenAnswIndex) {
@@ -290,36 +280,62 @@ class _QuizScreenState extends State<QuizScreen> {
       _start += 10;
       setState(() {
         answered = Answered.correct;
-        label=Text('+10 seconds',style: TextStyle(
-          color: AppColors.green,
-          fontSize: 16.w,
-          fontFamily: 'MontBold',
-          fontWeight: FontWeight.w700,
-        ),);
+        label = Text(
+          '+10 seconds',
+          style: TextStyle(
+            color: AppColors.green,
+            fontSize: 16.w,
+            fontFamily: 'MontBold',
+            fontWeight: FontWeight.w700,
+          ),
+        );
       });
     } else {
       setState(() {
-        label=Text('');
+        label = Text('');
         answered = Answered.wrong;
       });
     }
     if (index < widget.quiz.length - 1)
       Future.delayed(Duration(milliseconds: 500)).then((value) {
+        if (index == 0 && answered==Answered.wrong)
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+            backgroundColor: AppColors.darkblue,
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('-1 attempt',
+                      style: TextStyle(
+                        color: AppColors.red,
+                        fontFamily: 'MontBold',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.w,
+                      ))
+                ],
+              ))
+          );
         setState(() {
           index++;
-          label=Text('');
           answered = Answered.notStated;
+          label=Text('');
           visible = List.generate(4, (index) => true);
         });
+        Future.delayed(Duration(milliseconds: 400)).then((value) => ScaffoldMessenger.of(context).hideCurrentSnackBar());
       });
     else {
       _timer.cancel();
       Future.delayed(Duration(milliseconds: 500)).then((value) => showDialog(
-          context: context,
-          builder: (_) => ResultScreen(
+            context: context,
+            builder: (_) => Scaffold(
+              backgroundColor: Color(0x041537E5),
+              body: ResultScreen(
                 indexOfQuiz: widget.indexOfQuiz,
                 result: correctAnswers,
-              )));
+              ),
+            ),
+          ));
     }
   }
 }

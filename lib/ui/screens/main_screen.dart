@@ -30,21 +30,21 @@ class _MainScreenState extends State<MainScreen> {
               items: [
                 BottomNavigationBarItem(
                     icon: Assets.images.quiz
-                        .svg(color: AppColors.usualBlue.withOpacity(0.3)),
+                        .svg(color: AppColors.usualBlue.withOpacity(0.3),width: 30.w,height: 30.h),
                     label: 'Quiz',
-                    activeIcon: Assets.images.quiz.svg(color: AppColors.usualBlue)),
+                    activeIcon: Assets.images.quiz.svg(color: AppColors.usualBlue,width: 30.w,height: 30.h)),
                 BottomNavigationBarItem(
-                    icon: Assets.images.profile.svg(color: AppColors.usualBlue.withOpacity(0.3)),
+                    icon: Assets.images.profile.svg(color: AppColors.usualBlue.withOpacity(0.3),width: 30.w,height: 30.h),
                     label: 'Profile',
-                    activeIcon: Assets.images.profile.svg(color: AppColors.usualBlue)),
+                    activeIcon: Assets.images.profile.svg(color: AppColors.usualBlue,width: 30.w,height: 30.h)),
                 BottomNavigationBarItem(
                     label: 'Settings',
                     icon: Assets.images.settings.svg(
                         color: AppColors.usualBlue.withOpacity(0.3),
-                        width: 24.w,
-                        height: 24.h),
+                        width: 30.w,
+                        height: 30.h),
                     activeIcon: Assets.images.settings.svg(
-                        color: AppColors.usualBlue, width: 24.w, height: 24.h)),
+                        color: AppColors.usualBlue, width: 30.w, height: 30.h)),
               ],
               backgroundColor: AppColors.darkblue,
               unselectedLabelStyle: TextStyle(
