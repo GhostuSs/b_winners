@@ -34,9 +34,11 @@ Future<void> main() async {
   if (onboardingSeen.values.isEmpty) await onboardingSeen.put('seen', false);
   seen = onboardingSeen.values.first;
   if (prem.values.isEmpty) await prem.put('premium', false);
+  // final sd = await Hive.openBox('limits');
+  // await sd.clear();
+  // await prem.clear();
   premium = prem.values.first;
   final box = await Hive.openBox<HiveResult>('results');
-  print(box.values.length);
   runApp(const App());
 }
 

@@ -151,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Quiz> quiz = [];
     for (int i = 0; i < listMapAll[index - 1][index.toString()].length; i++)
       quiz.add(Quiz.fromJson(listMapAll[index - 1][index.toString()][i]));
-    if(premium==true || ((datad.attempts ?? 0) > 0))Navigator.push(
+    if(premium==true || ((datad.attempts!) > 0))Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext ctx) =>
