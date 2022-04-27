@@ -4,17 +4,12 @@ part 'profile_model.g.dart';
 @HiveType(typeId: 3)
 class ProfileStat extends HiveObject {
   ProfileStat(
-      {this.totalCorrAnsw,
-      this.progress,
+      {
       this.eQuiz,
       this.hQuiz,
       this.nQuiz,
       this.expQuiz,
       this.qQuiz});
-  @HiveField(0)
-  int? totalCorrAnsw=0;
-  @HiveField(1)
-  double? progress=0;
   @HiveField(2)
   int? qQuiz=0;
   @HiveField(3)

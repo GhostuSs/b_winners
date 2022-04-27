@@ -21,6 +21,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future load()async{
     final box = await Hive.openBox<ProfileStat>('profile');
+    final res = await Hive.openBox<HiveResult>('results');
+    for(final el in res.values){
+      print(el.correctAnswers);
+      corrAnsw+=int.tryParse(el.correctAnswers!) ?? 0;
+    }
     stat=box.values.first;
     return true;
   }
@@ -59,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             EdgeInsets.symmetric(horizontal: 24.w, vertical: 4.h),
                             child: ProfileInfo(
                                 info: 'Total number of correct answers: ',
-                                stat: (stat.totalCorrAnsw ?? 0).toString()),
+                                stat: (corrAnsw).toString()),
                           ),
                           Divider(
                             color: AppColors.white.withOpacity(0.3),
@@ -68,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             padding:
                             EdgeInsets.symmetric(horizontal: 24.w, vertical: 4.h),
                             child: ProfileInfo(
-                                info: 'Progress: ', stat: ((stat.progress!*100).round()).toString() + '%'),
+                                info: 'Progress: ', stat: ((corrAnsw/150*100).round()).toString() + '%'),
                           ),
                           Divider(
                             color: AppColors.white.withOpacity(0.3),
@@ -117,8 +122,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ));
       }else{
-        print(snapshot.data);
-        print(stat.progress);
         return Scaffold(
           backgroundColor: AppColors.darkblue,
         );

@@ -16,9 +16,10 @@ class LimitsHiveAdapter extends TypeAdapter<LimitsHive> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return LimitsHive()
-      ..timeToUpdate = fields[0] as DateTime?
-      ..attempts = fields[1] as int?;
+    return LimitsHive(
+      timeToUpdate: fields[0] as DateTime?,
+      attempts: fields[1] as int?,
+    );
   }
 
   @override

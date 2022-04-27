@@ -114,8 +114,6 @@ class _ResultScreenState extends State<ResultScreen> {
                             stat.put(
                               'profile',
                               ProfileStat(
-                                  totalCorrAnsw: 0,
-                                  progress: 0,
                                   qQuiz: 0,
                                   eQuiz: 0,
                                   expQuiz: 0,
@@ -123,14 +121,6 @@ class _ResultScreenState extends State<ResultScreen> {
                                   nQuiz: 0),
                             );
                           ProfileStat userData = stat.values.first;
-                          if (userData.totalCorrAnsw != null) {
-                            userData.totalCorrAnsw =
-                                (userData.totalCorrAnsw! + widget.result);
-                          } else {
-                            userData.totalCorrAnsw = 0;
-                            userData.totalCorrAnsw =
-                                (userData.totalCorrAnsw! + widget.result);
-                          }
                           switch (widget.indexOfQuiz) {
                             case 1:
                               (userData.qQuiz = userData.qQuiz! + 1);
@@ -147,8 +137,6 @@ class _ResultScreenState extends State<ResultScreen> {
                             case 5:
                               (userData.expQuiz = userData.expQuiz! + 1);
                           }
-                          if(userData.progress == null ) userData.progress=0;
-                          userData.progress=((userData.totalCorrAnsw ?? 0)/ 150) as double?;
                           await stat.delete('profile');
                           await stat.put('profile', userData);
                           Navigator.popAndPushNamed(

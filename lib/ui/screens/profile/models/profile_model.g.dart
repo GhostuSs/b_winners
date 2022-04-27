@@ -17,8 +17,6 @@ class ProfileStatAdapter extends TypeAdapter<ProfileStat> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ProfileStat(
-      totalCorrAnsw: fields[0] as int?,
-      progress: fields[1] as double?,
       eQuiz: fields[3] as int?,
       hQuiz: fields[5] as int?,
       nQuiz: fields[4] as int?,
@@ -30,11 +28,7 @@ class ProfileStatAdapter extends TypeAdapter<ProfileStat> {
   @override
   void write(BinaryWriter writer, ProfileStat obj) {
     writer
-      ..writeByte(7)
-      ..writeByte(0)
-      ..write(obj.totalCorrAnsw)
-      ..writeByte(1)
-      ..write(obj.progress)
+      ..writeByte(5)
       ..writeByte(2)
       ..write(obj.qQuiz)
       ..writeByte(3)
