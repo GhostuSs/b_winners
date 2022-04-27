@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:quiz_bet/data/app_settings/color_pallete/colors.dart';
+import 'package:quiz_bet/ui/screens/home/models/results/hive_results.dart';
 import 'package:quiz_bet/ui/screens/profile/models/profile_model.dart';
 import 'package:quiz_bet/ui/screens/profile/uikit/profile%20info.dart';
 import 'package:quiz_bet/ui/uikit/b_winners_label.dart';
@@ -16,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   ProfileStat stat=ProfileStat();
+  int corrAnsw = 0;
 
   Future load()async{
     final box = await Hive.openBox<ProfileStat>('profile');

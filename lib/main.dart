@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:quiz_bet/data/app_settings/navigation/routes.dart';
 import 'package:quiz_bet/ui/screens/home/models/results/hive_results.dart';
 import 'package:quiz_bet/ui/screens/profile/models/profile_model.dart';
+import 'package:quiz_bet/ui/screens/quiz/models/limit_model/limit_model.dart';
 
 import 'data/app_settings/color_pallete/colors.dart';
 
@@ -26,6 +27,7 @@ Future<void> main() async {
   }
   Hive.init(directory.path);
   Hive.registerAdapter<HiveResult>(HiveResultAdapter());
+  Hive.registerAdapter<LimitsHive>(LimitsHiveAdapter());
   Hive.registerAdapter<ProfileStat>(ProfileStatAdapter());
   final onboardingSeen = await Hive.openBox<bool>('seen');
   final prem = await Hive.openBox<bool>('premium');

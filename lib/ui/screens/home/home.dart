@@ -6,11 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:quiz_bet/data/app_settings/color_pallete/colors.dart';
+import 'package:quiz_bet/main.dart';
 import 'package:quiz_bet/ui/screens/home/models/results/hive_results.dart';
+import 'package:quiz_bet/ui/screens/quiz/models/limit_model/limit_model.dart';
 import 'package:quiz_bet/ui/screens/quiz/quiz_screen.dart';
 import 'package:quiz_bet/ui/uikit/b_winners_label.dart';
 import 'package:quiz_bet/ui/uikit/rounded_button.dart';
-import '../../../main.dart';
 import 'models/quiz_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,9 +23,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Iterable<HiveResult> results = [];
+  LimitsHive limits = LimitsHive();
   List<String> labels = ['','quick', 'easy','normal','hard','expert'];
   Future<bool> loadHive() async {
-
+    final box = await Hive.openBox<LimitsHive>('limits');
+    if(box.isEmpty==true) box.put('limits', LimitsHive(timeToUpdate: DateTime.now(),attempts: 5));
+    limits = box.values.first;
     await Hive.openBox<HiveResult>('results')
         .then((value) => results = value.values);
     return true;
@@ -62,6 +66,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       Divider(
                         color: AppColors.white.withOpacity(0.3),
                       ),
+                      if(!premium)Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: Row(mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40.r),
+                              border: Border.all(color: AppColors.red,width: 2.2)
+                            ),
+                            child: Center(child:Icon(Icons.clear_rounded,color: AppColors.red,)),
+                          ),
+                          SizedBox(width: 18.w,),
+                         Text('You have ${limits.attempts} attempts left',style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'MontBold',
+                            fontSize: 16.w,
+                            color: AppColors.red
+                          ),)
+                        ],),
+                      ),
                       Expanded(
                         child: ListView(
                           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -71,24 +95,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 for (int i = 1; i < 6; i++)
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 8.h),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20.h),
-                                        border: Border.all(color: AppColors.white.withOpacity(0.3))
-                                      ),
-                                      child: RoundedRectangleBtn(
-                                        label: (i*10).toString()+'\n '+labels[i].toUpperCase()+' QUIZ',
-                                        onTap: () => _onTap(i, data),
-                                        result: results
-                                            .where((element) =>
-                                        element.quizIndex ==
-                                            i.toString())
-                                            .isNotEmpty
-                                            ? results.firstWhere((element) =>
-                                        element.quizIndex == i.toString())
-                                            : null,
-                                      ),
-                                    ),
+                                    child: RoundedRectangleBtn(
+                                      label: (i*10).toString()+'\n '+labels[i].toUpperCase()+' QUIZ',
+                                      onTap: () => _onTap(i, data),
+                                      result: results
+                                          .where((element) =>
+                                      element.quizIndex ==
+                                          i.toString())
+                                          .isNotEmpty
+                                          ? results.firstWhere((element) =>
+                                      element.quizIndex == i.toString())
+                                          : null,
+                                    )
                                   )
                               ],
                             ),
@@ -110,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   end: Alignment.bottomCenter,
                   colors: [
                     AppColors.darkblue,
-                    AppColors.bglBlue,
+                    AppColors.darkblue,
                   ],
                 ),
               ),
@@ -119,12 +137,21 @@ class _HomeScreenState extends State<HomeScreen> {
         });
   }
 
-  void _onTap(int index, dynamic data) {
+  Future<void> _onTap(int index, dynamic data) async {
+    final box = await Hive.openBox<LimitsHive>('limits');
+    final datad = box.values.first;
+    if(datad.timeToUpdate!.difference(DateTime.now()).inHours>23){
+      datad.timeToUpdate=DateTime.now();
+      datad.attempts=5;
+    }
+    if(datad.attempts!>0)datad.attempts = (box.values.first.attempts!)-1;
+    await box.clear();
+    await box.put('limits', datad);
     final listMapAll = jsonDecode(data);
     List<Quiz> quiz = [];
     for (int i = 0; i < listMapAll[index - 1][index.toString()].length; i++)
       quiz.add(Quiz.fromJson(listMapAll[index - 1][index.toString()][i]));
-    Navigator.push(
+    if(premium==true || ((datad.attempts ?? 0) > 0))Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext ctx) =>
