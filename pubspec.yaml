@@ -56,7 +56,6 @@ flutter:
   assets:
     - assets/images/
     - assets/images/onBoarding.png
-    - assets/images/rectangle.svg
     - assets/quizes.json
   fonts:
     - family: Montserat

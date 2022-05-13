@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quiz_bet/gen/assets.gen.dart';
 import 'package:quiz_bet/ui/screens/onboarding/ui/onboarding_screen.dart';
 import 'package:quiz_bet/ui/screens/webview/web.dart';
-import 'package:quiz_bet/ui/uikit/b_winners_label.dart';
+import 'package:quiz_bet/ui/uikit/xbet_label.dart';
 import 'package:quiz_bet/ui/uikit/settings_button.dart';
 import '../../../data/app_settings/color_pallete/colors.dart';
 

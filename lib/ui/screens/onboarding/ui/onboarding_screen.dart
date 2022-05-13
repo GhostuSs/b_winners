@@ -57,53 +57,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ],
               ),
               SizedBox(
-                height: 30.h,
+                height: 14.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.star_rounded,color: AppColors.yellow,size: 50.h,),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.w),
-                    child: Text(
-                      'B',
-                      style: TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'MontBold',
-                          fontSize: 50.w,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black.withOpacity(0.5),
-                              offset: Offset(1,1),
-                              blurRadius: 2,
-                            )
-                          ]
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.star_rounded,color: AppColors.yellow,size: 50.h,),
+                  Assets.images.xbet.svg(),
+                  Padding(child: Assets.images.qwinners.svg(),padding: EdgeInsets.only(left: 50.w),)
                 ],
-              ),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: Svg('assets/images/rectangle.svg',color: AppColors.yellow,size: Size(360.w,85.h))
-                      )
-                  ),
-                  child: Center(
-                    child: Text(
-                      'WINNERS',
-                      style: TextStyle(
-                          color: AppColors.usualBlue,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'MontBold',
-                          fontSize: 50.w),
-                    ),
-                  ),
-                ),
               ),
               SizedBox(height: 100.h,),
               Padding(

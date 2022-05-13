@@ -7,7 +7,7 @@ import 'package:quiz_bet/data/app_settings/color_pallete/colors.dart';
 import 'package:quiz_bet/gen/assets.gen.dart';
 import 'package:quiz_bet/main.dart';
 import 'package:quiz_bet/ui/screens/home/models/quiz_model.dart';
-import 'package:quiz_bet/ui/uikit/b_winners_label.dart';
+import 'package:quiz_bet/ui/uikit/xbet_label.dart';
 
 import '../result/result_screen.dart';
 

@@ -11,7 +11,7 @@ import 'package:quiz_bet/ui/screens/home/models/results/hive_results.dart';
 import 'package:quiz_bet/ui/screens/onboarding/ui/onboarding_screen.dart';
 import 'package:quiz_bet/ui/screens/quiz/models/limit_model/limit_model.dart';
 import 'package:quiz_bet/ui/screens/quiz/quiz_screen.dart';
-import 'package:quiz_bet/ui/uikit/b_winners_label.dart';
+import 'package:quiz_bet/ui/uikit/xbet_label.dart';
 import 'package:quiz_bet/ui/uikit/rounded_button.dart';
 import 'models/quiz_model.dart';
 
