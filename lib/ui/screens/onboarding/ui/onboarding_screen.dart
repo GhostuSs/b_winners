@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hive/hive.dart';
 import 'package:quiz_bet/data/app_settings/color_pallete/colors.dart';
 import 'package:quiz_bet/data/app_settings/navigation/routes.dart';
@@ -153,11 +152,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   onTap: () async {
                     final box = await Hive.openBox<bool>('premium');
                     await box.clear();
-                    await box.put('premium', true);
                     final seen = await Hive.openBox<bool>('seen');
                     await seen.clear();
                     await seen.put('seen', true);
-                    premium=true;
+                    await purchase().then((value) => subscribed=value);
                     Navigator.pushNamed(context, MainNavigationRoutes.main);
                   },
                   child: Container(
@@ -188,7 +186,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>WebViewPage())),
+                        onTap: ()=>openTermsOfUse(),
+                            // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>WebViewPage())),
                         child: Text(
                           'Terms of use',
                           style: TextStyle(
@@ -199,17 +198,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: () async {
-                          final box = await Hive.openBox<bool>('premium');
-                          await box.clear();
-                          await box.put('premium', true);
-                          premium=true;
-                          final onboardingSeen = await Hive.openBox<bool>('seen');
-                          await onboardingSeen.clear();
-                          await onboardingSeen.put('seen', true);
-                          seen=true;
-                          Navigator.pop(context);
-                        },
+                        onTap: ()=>restore(),
                         child: Text(
                           'Restore',
                           style: TextStyle(
@@ -220,7 +209,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>WebViewPage())),
+                        onTap: ()=>openPrivacyPolicy(),
                         child: Text(
                           'Privacy Policy',
                           style: TextStyle(

@@ -45,7 +45,7 @@ class _QuizScreenState extends State<QuizScreen> {
             timer.cancel();
           });
         } else {
-          label = _start==15&&premium==false ? Text('-1 attempt',
+          label = _start==15&&subscribed==false ? Text('-1 attempt',
               style: TextStyle(
                 color: AppColors.red,
                 fontFamily: 'MontBold',
@@ -68,7 +68,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   void initState() {
-    label = premium==false ? Text('-1 attempt',
+    label = subscribed==false ? Text('-1 attempt',
         style: TextStyle(
           color: AppColors.red,
           fontFamily: 'MontBold',
