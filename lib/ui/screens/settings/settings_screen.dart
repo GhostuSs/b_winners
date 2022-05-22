@@ -59,7 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: SettingsButton(
-                  onPressed: () => openTermsOfUse(),
+                  onPressed: () =>openTermsOfUse(),
                   icon: Assets.images.termsOfUse.svg(),
                   label: 'Terms of use',
                 ),

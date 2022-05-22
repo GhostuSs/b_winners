@@ -21,6 +21,12 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  traffic_router:
+    git:
+      url: https://github.com/MrOlolo/traffic_router
+  flutter_webview_plugin: 0.4.0
+  app_review: 2.1.1+1
+
   json_serializable: ^6.1.5
   url_launcher: ^6.1.2
   apphud: ^2.2.2

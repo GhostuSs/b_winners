@@ -150,8 +150,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     left: 24.w, right: 24.w, top: 30.h, bottom: 22.h),
                 child: InkWell(
                   onTap: () async {
-                    final box = await Hive.openBox<bool>('premium');
-                    await box.clear();
                     final seen = await Hive.openBox<bool>('seen');
                     await seen.clear();
                     await seen.put('seen', true);
@@ -187,7 +185,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     children: [
                       InkWell(
                         onTap: ()=>openTermsOfUse(),
-                            // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>WebViewPage())),
+                            //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>WebViewPage())),
                         child: Text(
                           'Terms of use',
                           style: TextStyle(
